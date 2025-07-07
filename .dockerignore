@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.ipynb
+*.csv
+*.log
+.DS_Store
+.venv/
+venv/
+.git/
+*.zip
+*.tar.gz
+.idea/
