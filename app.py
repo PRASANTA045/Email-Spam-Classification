@@ -8,22 +8,22 @@ import logging
 
 app = FastAPI()
 
-# Load model
+# Load the trained spam model
 model = joblib.load("spam_model.pkl")
 
-# Mount static files (CSS, JS, etc.)
+# Mount static folder (for CSS)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Jinja2 templates folder
+# Tell FastAPI where to find templates
 templates = Jinja2Templates(directory="templates")
 
-# Home route → Renders HTML form
+# Home route – shows HTML form
 @app.get("/", response_class=HTMLResponse)
 async def read_form(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# Predict route
-@app.post("/predict")
+# POST /predict – handles form submission
+@app.post("/predict", response_class=HTMLResponse)
 async def predict(request: Request, text: str = Form(...)):
     try:
         prediction = model.predict([text])[0]
